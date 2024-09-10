@@ -3,7 +3,7 @@ const express = require("express");
 
 const app = express();
 app.get("/", (require, responce) => {
-  responce.send("This is homepage!");
+  responce.send("This is new homepage!");
 });
 
 app.listen(8000, () => {
