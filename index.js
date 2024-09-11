@@ -57,8 +57,20 @@ app.get("/example", (request, response, next) => {
   console.log(request.secure);
   console.log(request.accepts());
   console.log(request.get("Content-type"));
+  // response.location("/xyz");
+  response.set("title", "express-set");
+  const title = response.get("title");
+  console.log(title);
+  response.json({
+    name: "oleh",
+    email: "olbul@gmail.com",
+  });
+  // response.send("This is get method for example!");
+  // response.redirect("/test");
+});
 
-  response.send("This is get method for example!");
+app.get("/test", (request, response) => {
+  response.send("This is get for test!");
 });
 
 app.post("/example", (request, response, next) => {
