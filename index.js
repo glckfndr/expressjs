@@ -5,6 +5,7 @@ const log = require("./util/log");
 
 const app = express();
 app.use(cookieParser());
+app.set("view engine", "ejs");
 const admin = express.Router();
 const student = express.Router();
 
@@ -61,12 +62,27 @@ app.get("/example", (request, response, next) => {
   response.set("title", "express-set");
   const title = response.get("title");
   console.log(title);
-  response.json({
-    name: "oleh",
-    email: "olbul@gmail.com",
-  });
+  // response.json({
+  //   name: "oleh",
+  //   email: "olbul@gmail.com",
+  // });
   // response.send("This is get method for example!");
   // response.redirect("/test");
+  response.format({
+    "text/plain": () => {
+      response.send("Plain text response");
+    },
+    "application/json": () => {
+      response.json({ name: "oleh", email: "olbul@gmail.com" });
+    },
+    "text/html": () => {
+      // response.render("pages/home.ejs");
+      response.render("test.ejs", { name: "oleh", email: "olbul@gmail.com" });
+    },
+    default: () => {
+      response.send("Nothing matched!");
+    },
+  });
 });
 
 app.get("/test", (request, response) => {
