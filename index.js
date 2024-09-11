@@ -50,6 +50,14 @@ app.get("/example", (request, response, next) => {
   // response.cookie("name", "oleh");
   response.cookie("age", "26");
   response.clearCookie("name");
+  console.log(request.hostname);
+  console.log(request.ip);
+  console.log(request.method);
+  console.log(request.protocol);
+  console.log(request.secure);
+  console.log(request.accepts());
+  console.log(request.get("Content-type"));
+
   response.send("This is get method for example!");
 });
 
