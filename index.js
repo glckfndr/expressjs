@@ -16,7 +16,9 @@ app.get("/users", (request, response, next) => {
 app.get("/users/:id", (request, response, next) => {
   let { id } = request.params;
   console.log(id);
-  response.send(`User ${id} details`);
+  let { name, email } = request.query;
+  console.log(name, email);
+  response.send(`User: ${id} details: ${name}, ${email}`);
 });
 
 app.post("/example", (request, response, next) => {
