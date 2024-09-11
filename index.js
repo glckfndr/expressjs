@@ -9,8 +9,14 @@ app.get("/", (request, response) => {
   response.send("This is new homepage!");
 });
 
-app.get("/example", (request, response, next) => {
-  response.send("This is get method!");
+app.get("/users", (request, response, next) => {
+  response.send("List of users!");
+});
+
+app.get("/users/:id", (request, response, next) => {
+  let { id } = request.params;
+  console.log(id);
+  response.send(`User ${id} details`);
 });
 
 app.post("/example", (request, response, next) => {
