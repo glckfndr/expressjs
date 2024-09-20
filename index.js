@@ -3,8 +3,17 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const log = require("./util/log");
 const fs = require("fs");
+const mongodb = require("mongodb");
 
 const app = express();
+
+const connectionURL = "mongodb://localhost:27017";
+const client = new mongodb.MongoClient(connectionURL);
+client
+  .connect()
+  .then(() => console.log("Mongodb connection successful!"))
+  .catch((error) => console.log(error));
+
 app.use(cookieParser());
 app.set("view engine", "ejs");
 const admin = express.Router();
