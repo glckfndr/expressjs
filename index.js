@@ -9,6 +9,26 @@ const app = express();
 
 const connectionURL = "mongodb://localhost:27017";
 const client = new mongodb.MongoClient(connectionURL);
+const db = client.db("schoolDB");
+const students = db.collection("students");
+const first_student = {
+  name: "Oleh",
+  email: "olbul@gmail.com",
+  age: 23,
+  department: "CS",
+};
+app.post("/students", (request, response, next) => {
+  students
+    .insertOne(first_student)
+    .then(() =>
+      response
+        .status(201)
+        .send(`Student ${first_student.name} added successfully!`)
+    )
+    .catch((error) => response.status(500).send(error.message));
+  500;
+});
+
 client
   .connect()
   .then(() => console.log("Mongodb connection successful!"))
