@@ -19,17 +19,9 @@ const first_student = {
   department: "CS",
 };
 app.post("/students", (request, response, next) => {
-  const { name, email, age, department } = request.body; // first_student
   students
-    .insertOne({
-      name: name,
-      email: email,
-      age: age,
-      department: department,
-    })
-    .then(() =>
-      response.status(201).send(`Student ${name} added successfully!`)
-    )
+    .insertMany(request.body)
+    .then(() => response.status(201).send(`Students added successfully!`))
     .catch((error) => response.status(500).send(error.message));
   500;
 });
