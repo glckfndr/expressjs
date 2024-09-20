@@ -2,6 +2,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const log = require("./util/log");
+const fs = require("fs");
 
 const app = express();
 app.use(cookieParser());
@@ -84,6 +85,29 @@ app.get("/example", (request, response, next) => {
     },
   });
 });
+
+/* 45 */
+app.get("/example2", (request, response, next) => {
+  // throw new Error("Test Example2 error");
+  // console.log(xyz);
+  // response.send("Example2 route!");
+  fs.readFile("test.txt", (error, data) => {
+    if (data) {
+      request.send(data);
+    } else if (error) {
+      next(error);
+    }
+  });
+});
+
+const errorMiddleware = (error, request, response, next) => {
+  // console.log(error.message);
+  // response.send("Custom error handling in example2!");
+  response.status(500).send(error, message);
+  next(error.message);
+};
+
+app.use(errorMiddleware);
 
 app.get("/test", (request, response) => {
   response.send("This is get for test!");
