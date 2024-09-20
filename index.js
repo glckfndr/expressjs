@@ -18,12 +18,23 @@ const first_student = {
   age: 17,
   department: "CS",
 };
+// add student from request body
 app.post("/students", (request, response, next) => {
   students
     .insertMany(request.body)
     .then(() => response.status(201).send(`Students added successfully!`))
     .catch((error) => response.status(500).send(error.message));
-  500;
+});
+
+// add finds student from request query
+app.get("/students", (request, response, next) => {
+  const { age } = request.query;
+  console.log(request.query);
+  students
+    .find({ age: parseInt(age) })
+    .toArray()
+    .then((data) => response.status(200).json(data))
+    .catch((error) => response.status(500).send(error.message));
 });
 
 client
