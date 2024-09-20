@@ -6,24 +6,29 @@ const fs = require("fs");
 const mongodb = require("mongodb");
 
 const app = express();
+app.use(express.json());
 
 const connectionURL = "mongodb://localhost:27017";
 const client = new mongodb.MongoClient(connectionURL);
 const db = client.db("schoolDB");
 const students = db.collection("students");
 const first_student = {
-  name: "Oleh",
-  email: "olbul@gmail.com",
-  age: 23,
+  name: "Pavlo",
+  email: "pavbul@gmail.com",
+  age: 17,
   department: "CS",
 };
 app.post("/students", (request, response, next) => {
+  const { name, email, age, department } = request.body; // first_student
   students
-    .insertOne(first_student)
+    .insertOne({
+      name: name,
+      email: email,
+      age: age,
+      department: department,
+    })
     .then(() =>
-      response
-        .status(201)
-        .send(`Student ${first_student.name} added successfully!`)
+      response.status(201).send(`Student ${name} added successfully!`)
     )
     .catch((error) => response.status(500).send(error.message));
   500;
@@ -51,8 +56,6 @@ student.get("/home", (request, response, next) => {
   log(request);
   response.send("Student home route");
 });
-
-app.use(express.json());
 
 app.get("/home", (request, response) => {
   log(request);
