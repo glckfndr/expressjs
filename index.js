@@ -58,6 +58,20 @@ app.put("/students", (request, response, next) => {
     .catch((error) => response.status(500).json({ message: error.message }));
 });
 
+// delete student with email
+app.delete("/students", (request, response, next) => {
+  const { email } = request.query;
+
+  students
+    .findOneAndDelete({ email: email })
+    .then(() => {
+      response.status(200).json({
+        message: `Student with email: ${email} deleted successfully`,
+      });
+    })
+    .catch((error) => response.status(500).json({ message: error.message }));
+});
+
 client
   .connect()
   .then(() => console.log("Mongodb connection successful!"))
