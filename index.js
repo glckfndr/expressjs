@@ -37,6 +37,27 @@ app.get("/students", (request, response, next) => {
     .catch((error) => response.status(500).send(error.message));
 });
 
+// update student from request query
+app.put("/students", (request, response, next) => {
+  const { email } = request.query;
+  const { department, age } = request.body;
+
+  students
+    .findOneAndUpdate(
+      { email },
+      { $set: { department, age } },
+      { returnDocument: "after" }
+    )
+    .then((data) => {
+      console.log(data);
+      response.status(200).json({
+        message: "Student updated successfully",
+        updatedStudent: data.value,
+      });
+    })
+    .catch((error) => response.status(500).json({ message: error.message }));
+});
+
 client
   .connect()
   .then(() => console.log("Mongodb connection successful!"))
