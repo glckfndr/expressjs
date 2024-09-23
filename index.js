@@ -15,11 +15,30 @@ const studentSchema = mongoose.Schema({
   email: String,
   age: Number,
   department: String,
+  address: String,
 });
 
 const Student = mongoose.model("student", studentSchema);
 
 // add student from request body
+app.post("/student/single", async (request, response, next) => {
+  try {
+    const { name, email, age, department, address } = request.body;
+
+    const newStudent = new Student({
+      name,
+      email,
+      age,
+      department,
+      address,
+    });
+
+    await newStudent.save();
+    response.status(201).json({ message: "Student added successfully!" });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
 
 // finds student from request query
 
