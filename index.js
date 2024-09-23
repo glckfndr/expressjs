@@ -10,6 +10,15 @@ mongoose
   .then(() => console.log("Database connection successful!"))
   .catch((error) => console.log(error.message));
 
+const studentSchema = mongoose.Schema({
+  name: String,
+  email: String,
+  age: Number,
+  department: String,
+});
+
+const Student = mongoose.model("student", studentSchema);
+
 // add student from request body
 
 // finds student from request query
