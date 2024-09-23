@@ -40,6 +40,15 @@ app.post("/student/single", async (request, response, next) => {
   }
 });
 
+app.post("/student/multiple", async (request, response, next) => {
+  try {
+    await Student.insertMany(request.body);
+    response.status(201).json({ message: "Students added successfully!" });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
+
 // finds student from request query
 
 // update student from request query
