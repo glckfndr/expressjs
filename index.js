@@ -86,6 +86,29 @@ app.put("/student/single", async (request, response, next) => {
 });
 
 // delete student with email
+app.delete("/student/single", async (request, response, next) => {
+  try {
+    const { email } = request.query;
+    await Student.findOneAndDelete({ email });
+    response
+      .status(200)
+      .json({ message: `Student with email: ${email} deleted successfully!` });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
+
+app.delete("/student/single/:id", async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    await Student.findByIdAndDelete(id);
+    response
+      .status(200)
+      .json({ message: `Student with id: ${id} deleted successfully!` });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
 
 const errorMiddleware = (error, request, response, next) => {
   response.status(500).send(error, message);
