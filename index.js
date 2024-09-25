@@ -39,7 +39,7 @@ app.post("/student/single", async (request, response, next) => {
     response.status(500).json({ message: error.message });
   }
 });
-
+// add several students from request body
 app.post("/student/multiple", async (request, response, next) => {
   try {
     await Student.insertMany(request.body);
@@ -49,9 +49,21 @@ app.post("/student/multiple", async (request, response, next) => {
   }
 });
 
-// finds student from request query
+// find student from request query
 
-// update student from request query
+// update one student from request query
+app.put("/student/single", async (request, response, next) => {
+  try {
+    const { email } = request.query;
+    const { department, age } = request.body;
+    await Student.findOneAndUpdate({ email }, { department, age });
+    response
+      .status(200)
+      .json({ message: `Student with email: ${email}  updated successfully!` });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
 
 // delete student with email
 
