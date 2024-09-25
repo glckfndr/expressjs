@@ -49,7 +49,27 @@ app.post("/student/multiple", async (request, response, next) => {
   }
 });
 
-// find student from request query
+// find student from request query with email
+app.get("/student/single", async (request, response, next) => {
+  try {
+    const { email } = request.query;
+    const student = await Student.findOne({ email });
+    response.status(200).json({ data: student });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
+
+// find student from request query with id trough params
+app.get("/student/single/:id", async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    const student = await Student.findById(id);
+    response.status(200).json({ data: student });
+  } catch (error) {
+    response.status(500).json({ message: error.message });
+  }
+});
 
 // update one student from request query
 app.put("/student/single", async (request, response, next) => {
